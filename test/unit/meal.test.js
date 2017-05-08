@@ -1,4 +1,7 @@
+const assert = require('assert');
 const Meal = require('../../lib/models/meal');
+
+const expectedValidation = () => { throw new Error('expected validation errors but did not get any'); };
 
 describe('meal validation', () => {
 
@@ -15,5 +18,18 @@ describe('meal validation', () => {
       }]
     });
     return testMeal.validate();
+  });
+  
+  describe('validation failures', () => {
+
+    it('requires a name', () => {
+      const meal = new Meal();
+      return meal.validate()
+        .then(expectedValidation,
+        err => {
+          const errors = err.errors;
+          assert.ok(errors.name && errors.name.kind === 'required');
+        });  
+    });
   });
 });
