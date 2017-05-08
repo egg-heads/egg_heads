@@ -31,5 +31,9 @@ describe('meal validation', () => {
           assert.ok(errors.name && errors.name.kind === 'required');
         });  
     });
+
+    it('returns an array of ingredients', () => {
+      
+    });
   });
 });
