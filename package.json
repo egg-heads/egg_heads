@@ -1,6 +1,9 @@
 {
   "name": "egg_heads",
   "version": "1.0.0",
+  "engines": {
+    "node": "7.x"
+  },
   "description": "Quote Library",
   "main": "index.js",
   "directories": {
@@ -13,7 +16,7 @@
     "test:watch": "npm run test -- -w",
     "test:unit": "mocha test/unit",
     "test:e2e": "mocha test/e2e",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -27,8 +30,11 @@
   },
   "homepage": "https://github.com/NeversSync/egg_heads#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "jsonwebtoken-promisified": "^1.0.3",
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.8",
     "morgan": "^1.8.1"
