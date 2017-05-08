@@ -1,4 +1,2 @@
 # egg_heads
-Quote Library
-
-yeehee
+This mealplan will fill you up

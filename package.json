@@ -1,0 +1,43 @@
+{
+  "name": "egg_heads",
+  "version": "1.0.0",
+  "description": "Quote Library",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive",
+    "test:watch": "npm run test -- -w",
+    "test:unit": "mocha test/unit",
+    "test:e2e": "mocha test/e2e",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeversSync/egg_heads.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NeversSync/egg_heads/issues"
+  },
+  "homepage": "https://github.com/NeversSync/egg_heads#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.8",
+    "morgan": "^1.8.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0",
+    "nodemon": "^1.11.0"
+  }
+}
