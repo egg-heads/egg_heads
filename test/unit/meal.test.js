@@ -8,7 +8,7 @@ describe('meal validation', () => {
   it('validates a meal', () => {
     const testMeal = new Meal({
       name: 'grilled cheese',
-      ingredients:[{
+      ingredients: [{
         name: 'bread',
         category: 'grain'
       },
@@ -19,7 +19,7 @@ describe('meal validation', () => {
     });
     return testMeal.validate();
   });
-  
+
   describe('validation failures', () => {
 
     it('requires a name', () => {
@@ -29,16 +29,6 @@ describe('meal validation', () => {
         err => {
           const errors = err.errors;
           assert.ok(errors.name && errors.name.kind === 'required');
-        });  
-    });
-
-    it('returns an array of ingredients', () => {
-      const meal = new Meal({});
-      return meal.validate()
-        .then(expectedValidation,
-        err => {
-          const errors = err.errors;
-          assert.ok(errors.ingredients && errors.ingredients.kind === []);
         });
     });
   });
