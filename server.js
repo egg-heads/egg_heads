@@ -1,6 +1,7 @@
 /* eslint no-console: "off" */
 const app = require('./lib/app');
 const http = require('http');
+require('dotenv').config();
 
 const server = http.createServer(app);
 
