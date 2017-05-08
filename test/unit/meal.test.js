@@ -33,7 +33,13 @@ describe('meal validation', () => {
     });
 
     it('returns an array of ingredients', () => {
-      
+      const meal = new Meal({});
+      return meal.validate()
+        .then(expectedValidation,
+        err => {
+          const errors = err.errors;
+          assert.ok(errors.ingredients && errors.ingredients.kind === []);
+        });
     });
   });
 });
