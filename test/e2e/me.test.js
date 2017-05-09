@@ -25,4 +25,31 @@ describe('/me API', () => {
       .then(res => assert.deepEqual(res.body, {}));
   });
 
+  let testFridge = {
+    ingredients: [{
+      name: 'hamburger',
+      category: 'protein'
+    },
+    {
+      name: 'rice',
+      category: 'grain'
+    },
+    {
+      name: 'spinach',
+      category: 'veggies'
+    }]
+  };
+
+  it('adding ingredients to fridge', () => {
+    return request.post('/me/fridge')
+      .set('Authorization', token)
+      .send(testFridge)
+      .then(res => res.body)
+      .then(saved => {
+        assert.ok(saved._id);
+
+        testFridge = saved;
+      });
+  });
+
 });
