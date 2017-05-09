@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe('/me API', () => {
+describe.only('/me API', () => {
 
   before(db.drop);
 
@@ -19,10 +19,10 @@ describe('/me API', () => {
       .then(res => token = res.body.token);
   });
 
-  it('initial GET returns empty array', () => {
+  it('initial GET returns test user', () => {
     return request.get('/me')
       .set('Authorization', token)
-      .then(res => assert.deepEqual(res.body, {}));
+      .then(res => assert.equal(res.body.email, user.email));
   });
 
   let testFridge = {

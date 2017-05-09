@@ -82,9 +82,9 @@ describe('auth tests', () => {
 
     it('token is valid', () => {
       return request
-        .get('auth/verify')
+        .get('/auth/verify')
         .set('Authorization', token)
-        .then(res => assert.ok(res.body));
+        .then(res => assert.ok(res.body.token));
     });
   });
 
@@ -97,7 +97,7 @@ describe('auth tests', () => {
         () => { throw new Error('status should not be 200'); },
         res => {
           assert.equal(res.status, 401);
-          assert.equal(res.response.body.error, 'Unauthorized');
+          assert.equal(res.response.body.error, 'no authorization found');
         }
         );
     });
@@ -110,7 +110,7 @@ describe('auth tests', () => {
         () => { throw new Error('status should not be 200'); },
         res => {
           assert.equal(res.status, 401);
-          assert.equal(res.response.body.error, 'Unauthorized');
+          assert.equal(res.response.body.error, 'no authorization found');
         }
         );
     });
