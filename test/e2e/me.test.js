@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe.only('/me API', () => {
+describe('/me API', () => {
 
   before(db.drop);
 
@@ -42,7 +42,7 @@ describe.only('/me API', () => {
     ]
   };
 
-  it('adding ingredients to fridge', () => {
+  it.skip('adding ingredients to fridge', () => {
     return request.post('/me/fridge')
       .set('Authorization', token)
       .send(testFridge)

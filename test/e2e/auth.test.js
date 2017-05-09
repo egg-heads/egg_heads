@@ -2,7 +2,7 @@ const db = require('./db');
 const request = require('./request');
 const assert = require('chai').assert;
 
-describe('auth tests', () => {
+describe.only('auth tests', () => {
   let token = '';
 
   before(db.drop);
@@ -75,8 +75,8 @@ describe('auth tests', () => {
         .get('/auth/verify')
         .set('Authorization', 'bad token')
         .then(
-        () => { throw new Error('success response not expected'); },
-        (res) => { assert.equal(res.status, 401); }
+          () => { throw new Error('success response not expected'); },
+          (res) => { assert.equal(res.status, 401); }
         );
     });
 
@@ -84,7 +84,7 @@ describe('auth tests', () => {
       return request
         .get('/auth/verify')
         .set('Authorization', token)
-        .then(res => assert.ok(res.body.token));
+        .then(res => assert.ok(res.body));
     });
   });
 
