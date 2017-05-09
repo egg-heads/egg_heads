@@ -30,15 +30,5 @@ describe('meal validation', () => {
           assert.ok(errors.name && errors.name.kind === 'required');
         });
     });
-
-    it('name is a string', () => {
-      const meal = new Meal();
-      return meal.validate()
-        .then(expectedValidation,
-        err => {
-          const errors = err.errors;
-          assert.ok(errors.name && errors.name.kind === 'string');
-        });
-    });
   });
 });
