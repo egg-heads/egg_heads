@@ -26,18 +26,20 @@ describe('/me API', () => {
   });
 
   let testFridge = {
-    ingredients: [{
-      name: 'hamburger',
-      category: 'protein'
-    },
-    {
-      name: 'rice',
-      category: 'grain'
-    },
-    {
-      name: 'spinach',
-      category: 'veggies'
-    }]
+    ingredients: [
+      {
+        name: 'hamburger',
+        category: 'protein'
+      },
+      {
+        name: 'rice',
+        category: 'grain'
+      },
+      {
+        name: 'spinach',
+        category: 'veggies'
+      }
+    ]
   };
 
   it('adding ingredients to fridge', () => {
