@@ -16,7 +16,8 @@
     "test:watch": "npm run test -- -w",
     "test:unit": "mocha test/unit",
     "test:e2e": "mocha test/e2e",
-    "start": "node server.js"
+    "start": "nodemon server.js"
+    // TODO: change back to node for heroku/master branch
   },
   "repository": {
     "type": "git",
