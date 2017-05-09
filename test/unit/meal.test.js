@@ -1,7 +1,6 @@
 const assert = require('assert');
 const Meal = require('../../lib/models/meal');
-
-const expectedValidation = () => { throw new Error('expected validation errors but did not get any'); };
+const expectedValidation = require('../helper/validation');
 
 describe('meal validation', () => {
 
