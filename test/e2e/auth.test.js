@@ -2,7 +2,7 @@ const db = require('./db');
 const request = require('./request');
 const assert = require('chai').assert;
 
-describe('auth tests', () => {
+describe.only('auth tests', () => {
   let token = '';
 
   before(db.drop);
@@ -75,14 +75,14 @@ describe('auth tests', () => {
         .get('/auth/verify')
         .set('Authorization', 'bad token')
         .then(
-        () => { throw new Error('success response not expected'); },
-        (res) => { assert.equal(res.status, 401); }
+          () => { throw new Error('success response not expected'); },
+          (res) => { assert.equal(res.status, 401); }
         );
     });
 
     it('token is valid', () => {
       return request
-        .get('auth/verify')
+        .get('/auth/verify')
         .set('Authorization', token)
         .then(res => assert.ok(res.body));
     });
@@ -97,7 +97,7 @@ describe('auth tests', () => {
         () => { throw new Error('status should not be 200'); },
         res => {
           assert.equal(res.status, 401);
-          assert.equal(res.response.body.error, 'Unauthorized');
+          assert.equal(res.response.body.error, 'no authorization found');
         }
         );
     });
@@ -110,7 +110,7 @@ describe('auth tests', () => {
         () => { throw new Error('status should not be 200'); },
         res => {
           assert.equal(res.status, 401);
-          assert.equal(res.response.body.error, 'Unauthorized');
+          assert.equal(res.response.body.error, 'no authorization found');
         }
         );
     });
