@@ -1,7 +1,6 @@
 const db = require('./db');
 const request = require('./request');
 const assert = require('chai').assert;
-const user = require('../../lib/models/user');
 
 describe('auth tests', () => {
   let token = '';
