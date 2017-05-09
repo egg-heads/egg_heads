@@ -8,7 +8,7 @@ describe('user validation', () => {
   it('validates a user', () => {
 
     const testUser = new User({
-      username: 'mofo37',
+      email: 'mofo37',
       password: 'Ilovecows'
     });
     return testUser.validate();
@@ -16,13 +16,23 @@ describe('user validation', () => {
 
   describe('validation failures', () => {
 
-    it('requires a username', () => {
+    it('requires a password', () => {
       const user = new User();
       return user.validate()
         .then(expectedValidation,
         err => {
           const errors = err.errors;
-          assert.ok(errors.name && errors.name.kind === 'required');
+          assert.ok(errors.password && errors.password.kind === 'required');
+        });
+    });
+
+    it('requires an email', () => {
+      const user = new User();
+      return user.validate()
+        .then(expectedValidation,
+        err => {
+          const errors = err.errors;
+          assert.ok(errors.email && errors.email.kind === 'required');
         });
     });
   });
