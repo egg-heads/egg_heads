@@ -27,11 +27,11 @@ describe('auth tests', () => {
     };
 
     it('signup requires email', () => {
-      return badRequest('/auth/signup', { password: 'catsrkewl' }, 400, 'email and password required');
+      return badRequest('/auth/signup', { password: 'catsrkewl' }, 401, 'email and password required');
     });
 
     it('signup requires password', () => {
-      return badRequest('/auth/signup', { password: 'catsrkewl' }, 400, 'email and password required');
+      return badRequest('/auth/signup', { password: 'catsrkewl' }, 401, 'email and password required');
     });
 
     let token = '';
@@ -48,11 +48,11 @@ describe('auth tests', () => {
     });
 
     it('signin requires email', () => {
-      return badRequest('/auth/signin', { password: 'catsrkewl' }, 400, 'email and password must be supplied');
+      return badRequest('/auth/signin', { password: 'catsrkewl' }, 401, 'email and password required');
     });
 
     it('signin requires password', () => {
-      return badRequest('/auth/signin', { email: 'beibs@me.com' }, 400, 'email and password must be supplied');
+      return badRequest('/auth/signin', { email: 'beibs@me.com' }, 401, 'email and password required');
     });
 
     it('signin with wrong user', () => {
@@ -60,7 +60,7 @@ describe('auth tests', () => {
     });
 
     it('signin with wrong password', () => {
-      return badRequest('/auth/signin', { email: user.email, password: 'bad' }, 401, 'invalid username or password');
+      return badRequest('/auth/signin', { email: user.email, password: 'bad' }, 401, 'invalid email or password');
     });
 
     it('signin', () => {
@@ -73,7 +73,7 @@ describe('auth tests', () => {
     it('token is invalid', () => {
       return request
         .get('/auth/verify')
-        .set('authorization', 'bad token')
+        .set('Authorization', 'bad token')
         .then(
         () => { throw new Error('success response not expected'); },
         (res) => { assert.equal(res.status, 401); }
@@ -83,12 +83,12 @@ describe('auth tests', () => {
     it('token is valid', () => {
       return request
         .get('auth/verify')
-        .set('authorization', token)
+        .set('Authorization', token)
         .then(res => assert.ok(res.body));
     });
   });
 
-  describe('unauthorized', () => {
+  describe('Unauthorized', () => {
 
     it('401 with no token', () => {
       return request
@@ -105,12 +105,12 @@ describe('auth tests', () => {
     it('403 with invalid token', () => {
       return request
         .get('/me')
-        .set('authorization', 'bad token')
+        .set('Authorization', 'bad token')
         .then(
         () => { throw new Error('status should not be 200'); },
         res => {
           assert.equal(res.status, 401);
-          assert.equal(res.response.body.error, 'unauthorized');
+          assert.equal(res.response.body.error, 'Unauthorized');
         }
         );
     });
