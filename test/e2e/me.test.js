@@ -22,7 +22,7 @@ describe('/me API', () => {
   it('initial GET returns empty array', () => {
     return request.get('/me')
       .set('Authorization', token)
-      .then(res => assert.deepEqual(res.body, []));
+      .then(res => assert.deepEqual(res.body, {}));
   });
 
 });
