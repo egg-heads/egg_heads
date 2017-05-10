@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe.skip('/me API', () => {
+describe.only('/me API', () => {
 
   before(db.drop);
 
@@ -12,6 +12,18 @@ describe.skip('/me API', () => {
     email: 'sup@suuuup.com',
     password: 'yippeeeee'
   };
+
+  let testIngredients = [
+    {
+      name: 'tea'
+    },
+    {
+      name: 'ice cream'
+    },
+    {
+      name: 'shishkabob'
+    }
+  ];
 
   before(() => {
     return request.post('/auth/signup')
@@ -25,33 +37,39 @@ describe.skip('/me API', () => {
       .then(res => assert.equal(res.body.email, user.email));
   });
 
-  let testFridge = {
-    ingredients: [
-      {
-        name: 'hamburger',
-        category: 'protein'
-      },
-      {
-        name: 'rice',
-        category: 'grain'
-      },
-      {
-        name: 'spinach',
-        category: 'veggies'
-      }
-    ]
-  };
+  it('saves ingredients', () => {
+    return request.post('/ingredients')
+      .set('Authorization', token)
+      .send(testIngredients)
+      .then(res => res.body)
+      .then(savedIngredients => {
+        assert.ok(savedIngredients[0]._id);
+        testIngredients = savedIngredients;
+      });
+  });
 
   it('adding ingredients to fridge', () => {
+    let fridgeItem = [testIngredients[0]._id, testIngredients[1]._id];
+
     return request.post('/me/fridge')
       .set('Authorization', token)
-      .send(testFridge)
+      .send(fridgeItem)
       .then(res => res.body)
-      .then(saved => {
-        assert.ok(saved._id);
-
-        testFridge = saved;
+      .then(fridgeArray => {
+        assert.equal(fridgeArray, fridgeItem);
       });
+  });
+
+  // TODO: find out why we can't add an array of ingredients into the fridge field, only one item or else we get a single empty object'
+
+  it('gets ingredients in fridge', () => {
+    return request.get('/me/fridge')
+      .set('Authorization', token)
+      .then(res => res.body)
+      .then(fridgeIngredients => {
+        assert.equal(fridgeIngredients.length, 1);
+      });
+
   });
 
 });
