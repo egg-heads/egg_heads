@@ -24,4 +24,19 @@ describe.only('ingredients API', () => {
       .set('Authorization', token)
       .then(res => assert.deepEqual(res.body, []));
   });
+
+  let testIngredient = {
+    name: 'cilantro'
+  };
+
+  it('saves an ingredient', () => {
+    return request.post('/ingredients')
+      .set('Authorization', token)
+      .send(testIngredient)
+      .then(res => res.body)
+      .then(saved => {
+        assert.ok(saved._id);
+        testIngredient = saved;
+      });
+  });
 });
