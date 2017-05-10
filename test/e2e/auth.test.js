@@ -2,7 +2,7 @@ const db = require('./db');
 const request = require('./request');
 const assert = require('chai').assert;
 
-describe.only('auth tests', () => {
+describe('auth tests', () => {
   let token = '';
 
   before(db.drop);
