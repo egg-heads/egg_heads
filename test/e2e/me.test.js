@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe.only('/me API', () => {
+describe('/me API', () => {
 
   before(db.drop);
 

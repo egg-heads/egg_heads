@@ -1,10 +1,10 @@
 const assert = require('chai').assert;
-// const db = require('./db');
+const db = require('./db');
 const request = require('./request');
 
 describe('/meals API', () => {
 
-  // before(db.drop);
+  before(db.drop);
 
   let token = '';
   let chefToken = '';
@@ -54,22 +54,13 @@ describe('/meals API', () => {
       .then(saved => testIngredients = saved);
   });
 
-  it.skip('initial GET returns empty array', () => {
+  it('initial GET returns empty array', () => {
     return request.get('/meals')
       .set('Authorization', chefToken)
       .then(res => assert.deepEqual(res.body, []));
   });
 
-  it('only chef can use meals route', () => {
-    return request.get('/meals')
-      .set('Authorization', token)
-      .then(
-          () => { throw new Error('success response not expected'); },
-          (res) => { assert.equal(res.status, 401); }
-      );
-  });
-
-  it('saves a meals', () => {
+  it('saves meals', () => {
     return request.post('/meals')
       .set('Authorization', chefToken)
       .send(testMeals)
@@ -78,5 +69,13 @@ describe('/meals API', () => {
         assert.ok(saved[0]._id);
         testMeals = saved;
       });
+  });
+
+  it('deletes a meal', () => {
+    return request.delete('/meals')
+      .set('Authorization', chefToken)
+      .send(testMeals[2]._id)
+      .then(res => res.body)
+      .then(deleted => assert.isTrue(deleted.removed));
   });
 });
