@@ -74,3 +74,37 @@ What do you wish you knew better?
 How was it working on a team?
 Reflect on your progress from the start of 401
 Anything else?
+
+# ACTUAL README
+
+- Examples:
+    - POST to /meals as chef
+        ```json 
+        {
+        "name": "grilled cheese",
+        "ingredients": 
+            [
+            "591494eba84cac001175ec41",
+            "591494eba84cac001175ec42",
+            "591494eba84cac001175ec43"
+            ]
+        }
+        ```
+    - POST to /ingredients as any role
+        ```json
+        [
+        {
+            "name": "rice"
+        },
+        {
+            "name": "onions"
+        },
+        {
+            "name": "tofu"
+        }
+        ]
+        ```
+        59149c8b2b50558d2e1fb6ff
+        59149c8b2b50558d2e1fb700
+        59149c8b2b50558d2e1fb701
+    
