@@ -86,7 +86,7 @@ describe.only('/me API', () => {
 
   });
 
-  describe('/meals api', () => {
+  describe.skip('/meals api', () => {
 
     // need to save ingregrients when posting to /meal in this shape:
     // "ingredients": [
@@ -126,7 +126,8 @@ describe.only('/me API', () => {
     it('initial GET to favorites returns empty array', () => {
       return request.get('/me/favorites')
         .set('Authorization', token)
-        .then(res => assert.deepEqual(res.body, []));
+        .then(res => res.body)
+        .then(favorites => assert.deepEqual(favorites, []));
     });
   });
 });
