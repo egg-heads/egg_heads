@@ -162,5 +162,13 @@ describe.only('/me API', () => {
         .then(res => res.body)
         .then(saved => assert.equal(saved.favorites[0]._id, testMeals[1]._id));
     });
+
+    it('DELETE removes from favorites', () => {
+      return request.delete('/me/favorites')
+        .set('Authorization', token)
+        .send(testMeals[1]._id)
+        .then(res => res.body)
+        .then(deleted => assert.isTrue(deleted.removed));
+    });
   });
 });
