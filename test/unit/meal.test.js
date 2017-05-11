@@ -1,21 +1,13 @@
 const assert = require('assert');
 const Meal = require('../../lib/models/meal');
-
-const expectedValidation = () => { throw new Error('expected validation errors but did not get any'); };
+const expectedValidation = require('../helper/validation');
 
 describe('meal validation', () => {
 
   it('validates a meal', () => {
     const testMeal = new Meal({
       name: 'grilled cheese',
-      ingredients: [{
-        name: 'bread',
-        category: 'grain'
-      },
-      {
-        name: 'cheese',
-        category: 'protein'
-      }]
+      ingredients: ['5911f47f7f0c001e4ce4a963', '5911f47f7f0c001e4de4a963']
     });
     return testMeal.validate();
   });
