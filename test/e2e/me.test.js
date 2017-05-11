@@ -86,7 +86,15 @@ describe('/me API', () => {
 
   });
 
-  describe('GET /meals', () => {
+  describe('/meals api', () => {
+
+    // need to save ingregrients when posting to /meal in this shape:
+    // "ingredients": [
+    //   "591494eba84cac001175ec41",
+    //   "591494eba84cac001175ec42",
+    //   "591494eba84cac001175ec43"
+    // ]
+
 
     before(() => {
       testMeals.ingredients = testIngredients;
