@@ -168,7 +168,7 @@ describe.only('/me API', () => {
         .set('Authorization', token)
         .send(testMeals[1]._id)
         .then(res => res.body)
-        .then(deleted => assert.isTrue(deleted.removed));
+        .then(updated => assert.equal(updated.favorites.length, 0));
     });
   });
 });
