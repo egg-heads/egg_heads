@@ -129,5 +129,7 @@ describe.only('/me API', () => {
         .then(res => res.body)
         .then(favorites => assert.deepEqual(favorites, []));
     });
+
+    // TODO: test post
   });
 });
