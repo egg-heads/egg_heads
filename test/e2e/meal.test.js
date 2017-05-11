@@ -74,7 +74,9 @@ describe('/meals API', () => {
   it('deletes a meal', () => {
     return request.delete('/meals')
       .set('Authorization', chefToken)
-      .send(testMeals[2]._id)
+      .send({
+        id: testMeals[2]._id
+      })
       .then(res => res.body)
       .then(deleted => assert.isTrue(deleted.removed));
   });
