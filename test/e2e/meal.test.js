@@ -66,7 +66,7 @@ describe.only('/meals API', () => {
       .then(
           () => { throw new Error('success response not expected'); },
           (res) => { assert.equal(res.status, 401); }
-        );
+      );
   });
 
   it('saves a meals', () => {
