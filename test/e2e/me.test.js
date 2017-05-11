@@ -86,7 +86,7 @@ describe.only('/me API', () => {
 
   });
 
-  describe.skip('/meals api', () => {
+  describe('/meals api', () => {
 
     // need to save ingregrients when posting to /meal in this shape:
     // "ingredients": [
@@ -95,15 +95,42 @@ describe.only('/me API', () => {
     //   "591494eba84cac001175ec43"
     // ]
 
+//     [
+//   {
+//     "__v": 0,
+//     "name": "ricotta",
+//     "_id": "5914cea6f540a6c8e6360a6a"
+//   },
+//   {
+//     "__v": 0,
+//     "name": "mozzarella",
+//     "_id": "5914cea6f540a6c8e6360a6b"
+//   },
+//   {
+//     "__v": 0,
+//     "name": "tomato sauce",
+//     "_id": "5914cea6f540a6c8e6360a6c"
+//   },
+//   {
+//     "__v": 0,
+//     "name": "pasta",
+//     "_id": "5914cea6f540a6c8e6360a6d"
+//   }
+// ]
 
-    before(() => {
-      testMeals.ingredients = testIngredients;
+
+    before('saves a meal with ingredients', () => {
+      const ingredientIdArray = testIngredients.map(ingredient => ingredient._id);
+      testMeals[1].ingredients = ingredientIdArray;
+
       return request.post('/meals')
         .set('Authorization', token)
         .send(testMeals)
         .then(res => res.body)
         .then(savedMeals => {
-          assert.ok(savedMeals[0]._id);
+          assert.ok(savedMeals);
+          assert.equal(savedMeals[1].ingredients.length, 3);
+
           testMeals = savedMeals;
         });
     });
@@ -113,10 +140,8 @@ describe.only('/me API', () => {
         .set('Authorization', token)
         .then(res => res.body)
         .then(meals => {
-          assert.ok(meals);
-          assert.equal(meals.length, 2);
-        });
-      // not getting meals back because our meals have no ingredients at this point, how do we write the test to replicate the manual copy/paste of ingredient ids into meals?
+          assert.equal(meals.length, 1);
+        });      
     });
 
   });
@@ -130,6 +155,20 @@ describe.only('/me API', () => {
         .then(favorites => assert.deepEqual(favorites, []));
     });
 
-    // TODO: test post
+    it('POST saves to favorites', () => {
+      return request.post('/me/favorites')
+        .set('Authorization', token)
+        .send(testMeals[1])
+        .then(res => res.body)
+        .then(saved => assert.equal(saved.favorites[0]._id, testMeals[1]._id));
+    });
+
+    it('DELETE removes from favorites', () => {
+      return request.delete('/me/favorites')
+        .set('Authorization', token)
+        .send(testMeals[1]._id)
+        .then(res => res.body)
+        .then(updated => assert.equal(updated.favorites.length, 0));
+    });
   });
 });
