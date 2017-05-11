@@ -130,6 +130,8 @@ describe.only('/me API', () => {
         .then(savedMeals => {
           assert.ok(savedMeals);
           assert.equal(savedMeals[1].ingredients.length, 3);
+
+          testMeals = savedMeals;
         });
     });
 
@@ -153,7 +155,12 @@ describe.only('/me API', () => {
         .then(favorites => assert.deepEqual(favorites, []));
     });
 
-    // TODO: make POST test
-
+    it('POST saves to favorites', () => {
+      return request.post('/me/favorites')
+        .set('Authorization', token)
+        .send(testMeals[1])
+        .then(res => res.body)
+        .then(saved => assert.equal(saved.favorites[0]._id, testMeals[1]._id));
+    });
   });
 });
