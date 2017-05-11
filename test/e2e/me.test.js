@@ -10,11 +10,16 @@ describe('/me API', () => {
 
   const user = {
     email: 'sup@suuuup.com',
-    password: 'yippeeeee'
+    password: 'yippeeeee',
+    chef: true
   };
 
   let testIngredients = [
-    { name: 'tea' }, { name: 'ice cream' }, { name: 'shishkabob' }
+    { name: 'chicken' }, { name: 'mashed potatoes' }, { name: 'gravy' }
+  ];
+
+  let testMeals = [
+    { name: 'grilled cheese' }, { name: 'chicken dinner' }
   ];
 
   before(() => {
@@ -43,7 +48,7 @@ describe('/me API', () => {
     });
 
     it('adding single ingredient to fridge', () => {
-      let fridgeItem = { ingredient: testIngredients[0]._id };
+      let fridgeItem = { ingredient: testIngredients[0]._id, expiration: new Date() };
 
       return request.post('/me/fridge')
         .set('Authorization', token)
@@ -56,6 +61,8 @@ describe('/me API', () => {
 
     it('adding multiple ingredients to fridge', () => {
       let fridgeItem = [{ ingredient: testIngredients[0]._id, expiration: new Date() }, { ingredient: testIngredients[1]._id, expiration: new Date() }];
+
+// TODO: potentially use or reference the above test ingredients to make sure they are saved to the meals in the meals collection
 
       return request.post('/me/fridge')
         .set('Authorization', token)
@@ -76,5 +83,33 @@ describe('/me API', () => {
         });
 
     });
+
+  });
+
+  describe('GET /meals', () => {
+
+    before(() => {
+      testMeals.ingredients = testIngredients;
+      return request.post('/meals')
+        .set('Authorization', token)
+        .send(testMeals)
+        .then(res => res.body)
+        .then(savedMeals => {
+          assert.ok(savedMeals[0]._id);
+          testMeals = savedMeals;
+        });
+    });
+
+    it('gets meals which have matching ingredients to users fridge', () => {
+      return request.get('/me/meals')
+        .set('Authorization', token)
+        .then(res => res.body)
+        .then(meals => {
+          assert.ok(meals);
+          assert.equal(meals.length, 2);
+        });
+// not getting meals back because our meals have no ingredients at this point, how do we write the test to replicate the manual copy/paste of ingredient ids into meals?
+    });
+
   });
 });
