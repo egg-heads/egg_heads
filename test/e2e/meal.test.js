@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe.only('/meals API', () => {
+describe('/meals API', () => {
 
   before(db.drop);
 
@@ -66,7 +66,7 @@ describe.only('/meals API', () => {
       .then(
           () => { throw new Error('success response not expected'); },
           (res) => { assert.equal(res.status, 401); }
-        );
+      );
   });
 
   it('saves a meals', () => {
