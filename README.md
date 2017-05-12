@@ -1,79 +1,148 @@
 # egg_heads
 This mealplan will fill you up
 
+[
+  {
+    "_id": "591494eba84cac001175ec41",
+    "name": "bread"
+  },
+  {
+    "_id": "591494eba84cac001175ec42",
+    "name": "cheese"
+  },
+  {
+    "_id": "591494eba84cac001175ec43",
+    "name": "parsley"
+  },
+  {
+    "_id": "59149509a84cac001175ec44",
+    "name": "ketchup"
+  }
+]
 
-- REQUIREMENTS:
-This project is to build a moderately complex data-driven web site using express.js, node and mongoDB. Your site should require user registration and login and allow users to perform CRUD operations against the data. The server should expose REST data endpoints for all needed data operations, as well as serve the front-end assets (js, html, css).
+[
+  {
+    "__v": 0,
+    "name": "bacon",
+    "_id": "5915e74c03288a00111ea2ce"
+  },
+  {
+    "__v": 0,
+    "name": "lettuce",
+    "_id": "5915e74c03288a00111ea2cf"
+  },
+  {
+    "__v": 0,
+    "name": "tomato",
+    "_id": "5915e74c03288a00111ea2d0"
+  }
+]
 
-FUNCTIONAL REQUIREMENTS:
+## Roadmap: 
 
-Your base application should:
+```https://egg-heads.herokuapp.com/```
 
-- contain a master/detail level category (ex: Locations - master level / Pets - detail level)
+### Chef workflow:
 
-- allow access to user accounts (how you choose to implement this is open ended and up to you)
+- signup chef
 
-- have the ability to add favorite/wishlist items, which will be tied to the associated user account
+    - POST to ```/auth/signup```
 
-- be deployed using Heroku (or something similar)
+    ```json
 
+    { "email": <email>,
+    "password": <password>,
+    "chef": true 
+    }
 
-Your code should:
+    ```
 
-- be consistent across all files (code style and format)
+- copy the token that is returned. Set token as the value for an ```Authorization``` header
 
-- be contained in a clean/semantic application structure
+- to add a meal, GET ```/ingredients``` 
 
-- include modularization of primary pieces of functionality
+    - copy the IDs of the ingredients for the meal(s) you want to add
 
-As a group you will need to:
+    - if the ingredients for your meal don't exist, add them by POSTing to ```/ingredients``` (you can post this as an array!)
 
-- collaborate cross functionally
+        ```json
 
-- contribute equally
+        {
+            "name": <ingredient>
+        }
 
-- Sprint 0 basic deployment and infrastructure in place. All teams members can develop and deploy to heroku with appropriate env config.
+        ```
 
-- create an organization in GitHub, containing all members of your team, travis ci encouraged
+    - now POST to ```/meals```
+    
+    ```json
 
-- use a consistent branch naming convention (and include relevant feature branches, bug branches, etc)
+    { 
+    "name": <ingredientName>,
+    "ingredients": [<ingredientID>, <ingredientID>, <ingredientID>, <ingredientID>]
+    }
 
-- ask questions and get help when you're stuck
+    ```
 
-- create a meaningful and structured README, which will contain
+### User workflow:
 
-    - coding standards
+- POST to ```/auth/signup```
 
-    - application structure
+    ```json
 
-   - build/test/run instructions
+    { "email": <email>,
+      "password": <password>
+    }
 
-As a bonus, you can:
+    ```
 
-- add image uploads
+    - copy the token that is returned. Set token as the value for an ```Authorization``` header
 
-- integrate with Travis CI
+    - to add ingredients to your fridge, GET to ```/ingredients``` 
 
-- add a "Share this" option
+    - if the ingredients you have don't show up, add them by POSTing to ```/ingredients``` (you can post this as an array!)
 
-- etc, etc, etc
+        ```json
 
-- third party data
+        {
+            "name": <ingredient>
+        }
 
-- be ultra creative, come up with cool stuff!!!
+        ```
 
- 
+    - copy the IDs of the ingredients you want to add to your fridge 
 
-Submission:
+    - to add those ingredients to your fridge, POST an array of their IDs to ```/me/fridge```
 
-Each person on the team needs to make a canvas submission that includes a personal reflection on the week:
+        ```json
 
-What did you contribute?
-What did you learn?
-What do you wish you knew better?
-How was it working on a team?
-Reflect on your progress from the start of 401
-Anything else?
+        [{
+            "ingredient": <ingredientID>
+        },
+        {
+            "ingredient": <ingredientID>
+        },
+        {
+            "ingredient": <ingredientID>
+        },
+        {
+            "ingredient": <ingredientID>
+        }]
+
+        ```
+
+    - if you want to see your dashboard (and what's in your fridge), GET to ```/me```
+
+    - to see what meals you can make from the ingredients in your frige, GET to ```/me/meals```
+
+    - if you want to save a meal that you liked, add it to your favorites by POSTing to ```/me/favorites```
+
+        ```json
+
+        { "meal": <mealID> }
+
+        ```
+        
 
 # ACTUAL README
 
