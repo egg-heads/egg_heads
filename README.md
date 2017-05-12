@@ -48,7 +48,7 @@ This mealplan will fill you up
 
     - POST to ```/auth/signup```
 
-    ```json
+    ```
 
     { "email": <email>,
     "password": <password>,
