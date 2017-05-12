@@ -28,16 +28,18 @@
         ```js
 
         {
-            "name": <ingredient>
+            "name": "<ingredient>"
         }
         ```
 
     - now POST to ```/meals```
     
-    ```
+    ```js
     { 
-    "name": <ingredientName>,
-    "ingredients": [<ingredientID>, <ingredientID>, <ingredientID>, <ingredientID>]
+    "name": "<ingredientName>",
+    "ingredients": [
+        "<ingredientID>", "<ingredientID>", "<ingredientID>", "<ingredientID>"
+    ]
     }
     ```
 
@@ -47,8 +49,8 @@
 
     ```js
     { 
-      "email": <email>,
-      "password": <password>
+      "email": "<email>",
+      "password": "<password>"
     }
     ```
 
@@ -60,7 +62,7 @@
 
         ```js
         {
-            "name": <ingredient>
+            "name": "<ingredient>"
         }
         ```
 
@@ -70,16 +72,16 @@
 
         ```js
         [{
-            "ingredient": <ingredientID>
+            "ingredient": "<ingredientID>"
         },
         {
-            "ingredient": <ingredientID>
+            "ingredient": "<ingredientID>"
         },
         {
-            "ingredient": <ingredientID>
+            "ingredient": "<ingredientID>"
         },
         {
-            "ingredient": <ingredientID>
+            "ingredient": "<ingredientID>"
         }]
         ```
 
@@ -90,7 +92,7 @@
     - if you want to save a meal that you liked, add it to your favorites by POSTing to ```/me/favorites```
 
         ```js
-        { "meal": <mealID> }
+        { "meal": "<mealID>" }
         ```
         
 # ACTUAL README
