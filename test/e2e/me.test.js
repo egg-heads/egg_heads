@@ -16,7 +16,7 @@ describe('/me API', () => {
   };
 
   let testIngredients = [
-    { name: 'chicken' }, { name: 'mashed potatoes' }, { name: 'gravy' }, { name: 'old brussels'}
+    { name: 'chicken' }, { name: 'mashed potatoes' }, { name: 'gravy' }, { name: 'old brussels' }
   ];
 
   let testMeals = [
@@ -33,8 +33,9 @@ describe('/me API', () => {
     return request.get('/me')
       .set('Authorization', token)
       .then(res => {
-        console.log(res);
         assert.equal(res.body.email, user.email);
+        assert.ok(res.body.favorites);
+        assert.ok(res.body.fridge);
       });
   });
 
@@ -89,7 +90,7 @@ describe('/me API', () => {
     it('DELETE removes from fridge', () => {
       return request.delete('/me/fridge')
         .set('Authorization', token)
-        .send({ _id: fridgeIngredients[2].ingredient._id})
+        .send({ _id: fridgeIngredients[2].ingredient._id })
         .then(res => res.body)
         .then(updated => assert.equal(updated.fridge.length, 3));
     });
@@ -120,7 +121,7 @@ describe('/me API', () => {
         .then(res => res.body)
         .then(meals => {
           assert.equal(meals.length, 1);
-        });      
+        });
     });
 
   });
@@ -140,6 +141,15 @@ describe('/me API', () => {
         .send(testMeals[1])
         .then(res => res.body)
         .then(saved => assert.equal(saved.favorites[0]._id, testMeals[1]._id));
+    });
+
+    it('GET to /me returns favorites and fridge arrays', () => {
+      return request.get('/me')
+        .set('Authorization', token)
+        .then(res => {
+          assert.equal(res.body.favorites.length, 1);
+          assert.equal(res.body.fridge.length, 3);
+        });
     });
 
     it('DELETE removes from favorites', () => {
