@@ -53,7 +53,7 @@ describe('/me API', () => {
     });
 
     it('adding single ingredient to fridge', () => {
-      let fridgeItem = { ingredient: testIngredients[0]._id, expiration: new Date() };
+      let fridgeItem = { ingredient: testIngredients[0]._id };
 
       return request.post('/me/fridge')
         .set('Authorization', token)
@@ -65,7 +65,7 @@ describe('/me API', () => {
     });
 
     it('adding multiple ingredients to fridge', () => {
-      let fridgeItem = [{ ingredient: testIngredients[1]._id, expiration: new Date() }, { ingredient: testIngredients[2]._id, expiration: new Date() }, { ingredient: testIngredients[3]._id, expiration: new Date() }];
+      let fridgeItem = [{ ingredient: testIngredients[1]._id }, { ingredient: testIngredients[2]._id }, { ingredient: testIngredients[3]._id }];
 
       return request.post('/me/fridge')
         .set('Authorization', token)
