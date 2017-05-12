@@ -2,11 +2,12 @@ const assert = require('chai').assert;
 const db = require('./db');
 const request = require('./request');
 
-describe.only('/me API', () => {
+describe('/me API', () => {
 
   before(db.drop);
 
   let token = '';
+  let fridgeIngredients = '';
 
   const user = {
     email: 'sup@suuuup.com',
@@ -15,7 +16,7 @@ describe.only('/me API', () => {
   };
 
   let testIngredients = [
-    { name: 'chicken' }, { name: 'mashed potatoes' }, { name: 'gravy' }
+    { name: 'chicken' }, { name: 'mashed potatoes' }, { name: 'gravy' }, { name: 'old brussels'}
   ];
 
   let testMeals = [
@@ -60,9 +61,7 @@ describe.only('/me API', () => {
     });
 
     it('adding multiple ingredients to fridge', () => {
-      let fridgeItem = [{ ingredient: testIngredients[0]._id, expiration: new Date() }, { ingredient: testIngredients[1]._id, expiration: new Date() }];
-
-      // TODO: potentially use or reference the above test ingredients to make sure they are saved to the meals in the meals collection
+      let fridgeItem = [{ ingredient: testIngredients[1]._id, expiration: new Date() }, { ingredient: testIngredients[2]._id, expiration: new Date() }, { ingredient: testIngredients[3]._id, expiration: new Date() }];
 
       return request.post('/me/fridge')
         .set('Authorization', token)
@@ -70,7 +69,7 @@ describe.only('/me API', () => {
         .then(res => res.body)
         .then(fridgeArray => {
           assert.equal(fridgeArray[0].ingredient, testIngredients[0]._id);
-          assert.equal(fridgeArray.length, 3);
+          assert.equal(fridgeArray.length, 4);
         });
     });
 
@@ -78,46 +77,23 @@ describe.only('/me API', () => {
       return request.get('/me/fridge')
         .set('Authorization', token)
         .then(res => res.body)
-        .then(fridgeIngredients => {
-          assert.equal(fridgeIngredients.length, 3);
+        .then(gottenIngredients => {
+          assert.equal(gottenIngredients.length, 4);
+          fridgeIngredients = gottenIngredients;
         });
+    });
 
+    it('DELETE removes from fridge', () => {
+      return request.delete('/me/fridge')
+        .set('Authorization', token)
+        .send({ _id: fridgeIngredients[2].ingredient._id})
+        .then(res => res.body)
+        .then(updated => assert.equal(updated.fridge.length, 3));
     });
 
   });
 
   describe('/meals api', () => {
-
-    // need to save ingregrients when posting to /meal in this shape:
-    // "ingredients": [
-    //   "591494eba84cac001175ec41",
-    //   "591494eba84cac001175ec42",
-    //   "591494eba84cac001175ec43"
-    // ]
-
-//     [
-//   {
-//     "__v": 0,
-//     "name": "ricotta",
-//     "_id": "5914cea6f540a6c8e6360a6a"
-//   },
-//   {
-//     "__v": 0,
-//     "name": "mozzarella",
-//     "_id": "5914cea6f540a6c8e6360a6b"
-//   },
-//   {
-//     "__v": 0,
-//     "name": "tomato sauce",
-//     "_id": "5914cea6f540a6c8e6360a6c"
-//   },
-//   {
-//     "__v": 0,
-//     "name": "pasta",
-//     "_id": "5914cea6f540a6c8e6360a6d"
-//   }
-// ]
-
 
     before('saves a meal with ingredients', () => {
       const ingredientIdArray = testIngredients.map(ingredient => ingredient._id);
@@ -129,7 +105,7 @@ describe.only('/me API', () => {
         .then(res => res.body)
         .then(savedMeals => {
           assert.ok(savedMeals);
-          assert.equal(savedMeals[1].ingredients.length, 3);
+          assert.equal(savedMeals[1].ingredients.length, 4);
 
           testMeals = savedMeals;
         });
