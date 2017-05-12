@@ -32,7 +32,10 @@ describe('/me API', () => {
   it('initial GET returns test user', () => {
     return request.get('/me')
       .set('Authorization', token)
-      .then(res => assert.equal(res.body.email, user.email));
+      .then(res => {
+        console.log(res);
+        assert.equal(res.body.email, user.email);
+      });
   });
 
   describe('fridge post', () => {
