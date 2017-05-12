@@ -1,4 +1,7 @@
 # egg_heads
+
+An API to help you decide what to make for breakfast, lunch and dinner.
+
 ## Roadmap: 
 
 ```https://egg-heads.herokuapp.com/```
@@ -94,70 +97,9 @@
         ```js
         { "meal": "<mealID>" }
         ```
-        
-# ACTUAL README
 
-### Examples:
-- POST to /meals as chef
-    ```js
-    {
-    "name": "grilled cheese",
-    "ingredients": 
-        [
-        "591494eba84cac001175ec41",
-        "591494eba84cac001175ec42",
-        "591494eba84cac001175ec43"
-        ]
-    }
-    ```
-* POST to /ingredients as any role
-    ```js
-    [
-    {
-        "name": "rice"
-    },
-    {
-        "name": "onions"
-    },
-    {
-        "name": "tofu"
-    }
-    ]
-    ```
+## Authors
 
-* Can PUT to /me to update user, i.e. if you want to make yourself a chef because you're awesome at cooking now.
-If you do this, you must sign in again and take your new token when posting to /meals doing other chef only actions.
-
-* To POST to your fridge: /me/fridge: 
-    * Example: 
-    ```json
-    [
-        {
-        "ingredient": "59149c8b2b50558d2e1fb6ff"
-        },
-        {
-        "ingredient": "59149c8b2b50558d2e1fb700"
-        },
-        {
-        "ingredient": "59149c8b2b50558d2e1fb701"
-        }
-    ]
-    ```
-
-
-
-        notes for us right now:
-
-        59149c8b2b50558d2e1fb6ff
-        59149c8b2b50558d2e1fb700
-        59149c8b2b50558d2e1fb701
-    
-    {
-        "name": "stir fry",
-        "ingredients": 
-            [
-            "59149c8b2b50558d2e1fb6ff",
-    		"59149c8b2b50558d2e1fb700",
-        	"59149c8b2b50558d2e1fb701"
-            ]
-        }
+- Yuval Allweil
+- Nicky Evers
+- Morgan Fogarty     
