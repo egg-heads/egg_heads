@@ -46,6 +46,16 @@ An API to help you decide what to make for breakfast, lunch and dinner.
     }
     ```
 
+    - to delete a meal, copy the ID of the meal you want to delete.
+
+    - now DELETE to ```/meals``` 
+
+    ```js
+    {
+        "id": "<mealID>"
+    }
+    ```
+
 ### User workflow:
 
 - POST to ```/auth/signup```
